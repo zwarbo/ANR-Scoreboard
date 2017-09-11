@@ -40,6 +40,8 @@ class ViewController: NSViewController {
     let fileWinB = "PlayerBWon.txt"
     let fileIDTextA = "PlayerAID.txt"
     let fileIDTextB = "PlayerBID.txt"
+    let fileFlatlinedA = "PlayerAFlatlined.txt"
+    let fileFlatlinedB = "PlayerBFlatlined.txt"
     
     var allPlayers = [Tournament.Player]()
     var playerNames = [String]()
@@ -155,7 +157,7 @@ extension ViewController {
         playerNames.removeAll()
         allPlayers.removeAll()
         
-        // Loop through the Tournament JSON Data dictionary and create a players array
+        // Loop through the Tournament "players" section of the JSON Data dictionary and create a players array
         if let t = tournament?.players {
             for person in t {
                 let player = Tournament.Player(name: person.name,
@@ -253,15 +255,34 @@ extension ViewController {
             updatefactionInfoFromName(playerName: comboBoxPlayerB.stringValue, whichBox: "B", playingAsRunner: false)
         }
     }
-    
+    // Set the flatline output text when checkbox ticked for a player. Only one can be ticked at a time
     
     @IBAction func flatlinePlayerACheckBoxClicked(_ sender: Any) {
         
-        playerBFlatlineWinCheckBox.state = NSControl.StateValue.off
+        if playerAFlatlineWinCheckBox.state == NSControl.StateValue.on {
+            playerBFlatlineWinCheckBox.state = NSControl.StateValue.off
+            writeToOutputFile(content: " ", fileName: fileFlatlinedA)
+            writeToOutputFile(content: " ", fileName: fileWinB)
+            writeToOutputFile(content: "Flatlined", fileName: fileFlatlinedB)
+            writeToOutputFile(content: "WIN", fileName: fileWinA)
+        } else {
+            writeToOutputFile(content: " ", fileName: fileFlatlinedB)
+            writeToOutputFile(content: " ", fileName: fileWinA)
+        }
     }
+    
     @IBAction func flatlinePlayerBCheckBoxClicked(_ sender: Any) {
         
-        playerAFlatlineWinCheckBox.state = NSControl.StateValue.off
+        if playerBFlatlineWinCheckBox.state == NSControl.StateValue.on {
+            playerAFlatlineWinCheckBox.state = NSControl.StateValue.off
+            writeToOutputFile(content: " ", fileName: fileFlatlinedB)
+            writeToOutputFile(content: " ", fileName: fileWinA)
+            writeToOutputFile(content: "Flatlined", fileName: fileFlatlinedA)
+            writeToOutputFile(content: "WIN", fileName: fileWinB)
+        } else {
+            writeToOutputFile(content: " ", fileName: fileFlatlinedA)
+            writeToOutputFile(content: " ", fileName: fileWinB)
+        }
     }
     
     // Update OBS via text file outputs
@@ -345,6 +366,9 @@ extension ViewController {
         
         writeToOutputFile(content: " ", fileName: fileWinA)
         writeToOutputFile(content: " ", fileName: fileWinB)
+        
+        writeToOutputFile(content: " ", fileName: fileFlatlinedA)
+        writeToOutputFile(content: " ", fileName: fileFlatlinedB)
         
         playerAFlatlineWinCheckBox.state = NSControl.StateValue.off
         playerBFlatlineWinCheckBox.state = NSControl.StateValue.off
