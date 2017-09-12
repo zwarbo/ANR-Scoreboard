@@ -1,10 +1,12 @@
 //
 //  Score.swift
-//  ANR Scoreboard 2
+//  ANR Scoreboard
 //
-//  Created by mark on 6/09/17.
-//  Copyright © 2017 mark. All rights reserved.
+//  Created by Mark Blackman on 6/09/17.
+//  Copyright © 2017 Mark Blackman. All rights reserved.
 //
+
+//Score counter structure
 
 import Foundation
 
