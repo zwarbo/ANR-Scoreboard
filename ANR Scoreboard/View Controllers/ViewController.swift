@@ -194,7 +194,7 @@ extension ViewController {
             factionInfo.append(contentsOf: allPlayers
                 .filter {$0.name.contains(playerName)}
                 .map { $0.runnerIdentity })
-            let factionInfoFlat = factionInfo.flatMap({ $0 }).joined(separator: ": ")
+            let factionInfoFlat = factionInfo.flatMap({ $0 }).joined(separator: " - ")
             switch whichBox {
             case "A":
                 idTextPlayerA.stringValue = factionInfoFlat
@@ -210,7 +210,7 @@ extension ViewController {
             factionInfo.append(contentsOf: allPlayers
                 .filter {$0.name.contains(playerName)}
                 .map { $0.corpIdentity })
-            let factionInfoFlat = factionInfo.flatMap({ $0 }).joined(separator: ": ")
+            let factionInfoFlat = factionInfo.flatMap({ $0 }).joined(separator: " - ")
             switch whichBox {
             case "A":
                 idTextPlayerA.stringValue = factionInfoFlat
@@ -327,6 +327,9 @@ extension ViewController {
         if playerAscore.isSevenPlus() {
             writeToOutputFile(content: "WIN", fileName: fileWinA)
         }
+        if playerAscore.isSixPlus() && (idTextPlayerA.stringValue == "Jinteki: Harmony Medtech" || idTextPlayerB.stringValue == "Jinteki: Harmony Medtech")  {
+            writeToOutputFile(content: "WIN", fileName: fileWinA)
+        }
     }
     
     @IBAction func increaseButtonClickedB(_ sender: Any) {
@@ -335,6 +338,9 @@ extension ViewController {
         scoreTextPlayerB.stringValue = String(playerBscore.score)
         writeToOutputFile(content: String(playerBscore.score), fileName: fileScoreB)
         if playerBscore.isSevenPlus() {
+            writeToOutputFile(content: "WIN", fileName: fileWinB)
+        }
+        if playerBscore.isSixPlus() && (idTextPlayerA.stringValue == "Jinteki: Harmony Medtech" || idTextPlayerB.stringValue == "Jinteki: Harmony Medtech")  {
             writeToOutputFile(content: "WIN", fileName: fileWinB)
         }
     }
