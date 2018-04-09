@@ -194,7 +194,7 @@ extension ViewController {
             factionInfo.append(contentsOf: allPlayers
                 .filter {$0.name.contains(playerName)}
                 .map { $0.runnerIdentity })
-            let factionInfoFlat = factionInfo.flatMap({ $0 }).joined(separator: " - ")
+            let factionInfoFlat = factionInfo.compactMap({ $0 }).joined(separator: " - ")
             switch whichBox {
             case "A":
                 idTextPlayerA.stringValue = factionInfoFlat
@@ -210,7 +210,7 @@ extension ViewController {
             factionInfo.append(contentsOf: allPlayers
                 .filter {$0.name.contains(playerName)}
                 .map { $0.corpIdentity })
-            let factionInfoFlat = factionInfo.flatMap({ $0 }).joined(separator: " - ")
+            let factionInfoFlat = factionInfo.compactMap({ $0 }).joined(separator: " - ")
             switch whichBox {
             case "A":
                 idTextPlayerA.stringValue = factionInfoFlat
@@ -310,8 +310,8 @@ extension ViewController {
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = false
         
-        panel.beginSheetModal(for: window) { (result) in
-            if result.rawValue == NSFileHandlingPanelOKButton {
+        panel.beginSheetModal(for: window) { (result: NSApplication.ModalResponse) -> Void in
+            if result == NSApplication.ModalResponse.OK {
                 self.selectedInputFile = panel.url
             }
         }
